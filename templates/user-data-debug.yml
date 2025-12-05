@@ -1,0 +1,65 @@
+#cloud-config
+
+# Set root password to "password" (change this!)
+chpasswd:
+  list: |
+    root:roottoor
+  expire: false
+
+# Enable root user
+disable_root: false
+
+# Enable SSH password authentication
+ssh_pwauth: yes
+
+# Create user and import SSH keys from GitHub
+users:
+  - name: ${gh_user}
+    ssh_import_id:
+      - gh:${gh_user}
+    shell: /bin/bash
+    sudo: ALL=(ALL) NOPASSWD:ALL
+
+write_files:
+  # Configure SSH Daemon
+  - path: /etc/ssh/sshd_config
+    content: |
+      ${sshd_config}
+
+# Set TimeZone
+timezone: "${timezone}"
+
+# Set Hostname
+hostname: "${hostname}"
+
+# Install packages
+packages:
+  - curl
+  - dnsutils
+  - figlet
+  - jq
+  - plocate
+  - ncdu
+  - vim
+
+# Update/Upgrade & Reboot if necessary
+package_update: true
+package_upgrade: true
+package_reboot_if_required: true
+
+# Remove cloud-init
+runcmd:
+  # Log start date/time
+  - date -R > /root/Start.txt
+  # Set Hostname in /etc/motd
+  - figlet "${hostname}" > /etc/motd
+  # Configure UFW Firewall and allow SSH port
+  - ufw allow "${sshdport}"/tcp && ufw enable
+  # Restart and enable SSH service - we changed sshd_config !
+  - systemctl restart ssh && systemctl enable ssh
+  # Rebuild locate database
+  - updatedb
+  # Log finish date/time and reboot
+  - date -R > /root/Finish.txt
+  # final reboot
+  - reboot
