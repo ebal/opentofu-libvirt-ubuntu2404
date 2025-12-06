@@ -1,15 +1,7 @@
 #cloud-config
 
-# Set root password to "password" (change this!)
-chpasswd:
-  list: |
-    root:roottoor
-  expire: false
-
-disable_root: false
-
 # Disable root user
-#disable_root: true
+disable_root: true
 
 # Enable SSH password authentication
 ssh_pwauth: no
