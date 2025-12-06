@@ -20,12 +20,6 @@ terraform {
       source = "hashicorp/time"
     }
 
-    # Tailscale Provider
-    tailscale = {
-      source  = "tailscale/tailscale"
-      version = ">=0.24"
-    }
-
   }
 
   # Configure remote state storage
@@ -39,11 +33,6 @@ terraform {
 
 provider "libvirt" {
   uri = "qemu:///system"
-}
-
-# Taiscale API TSKEY
-provider "tailscale" {
-  api_key = var.tskey_api
 }
 
 # Create a random ID to avoid name collisions

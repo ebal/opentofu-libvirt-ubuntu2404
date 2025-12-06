@@ -15,7 +15,7 @@ This repository contains an OpenTofu deployment that boots Ubuntu 24.04 LTS clou
 
 ## Quick reference to key resources and files:
 
-- OpenTu/Terraform providers & initialization: [provider.tf](provider.tf) (`random`, `tailscale`, `libvirt` provider)
+- OpenTu/Terraform providers & initialization: [provider.tf](provider.tf) (`random`, `libvirt` provider)
 - VM domain definition: [domain.tf](domain.tf) — main domain resource is [`libvirt_domain.example`](domain.tf).
 - Cloud-init ISO & metadata: [cloudinit.tf](cloudinit.tf) — cloud-init disk resource is [`libvirt_cloudinit_disk.init`](cloudinit.tf).
 - Base and derived QCOW2 volumes: [volume.tf](volume.tf) — key volumes include [`libvirt_volume.ubuntu_24_04_image`](volume.tf), based on a download copy of https://cloud-images.ubuntu.com/oracular/current/oracular-server-cloudimg-amd64.img (ubuntu 24.04.LTS)
